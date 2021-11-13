@@ -52,7 +52,7 @@ namespace ReelWords
                 var dictionary = await dictionaryReader.ReadAsync(dictionaryStream);
                 var reels = await reelsReader.ReadAsync(reelsStream);
                 var scores = await scoresReader.ReadAsync(scoresStream);
-                
+
                 var slotMachine = new SlotMachine(reels, scores, dictionary);
 
                 return slotMachine;

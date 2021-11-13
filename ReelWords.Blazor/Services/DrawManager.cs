@@ -34,7 +34,7 @@ namespace ReelWords.Blazor.Services
             gamePage.Word = state.Word;
             gamePage.IsWordValid = state.IsWordValid;
             gamePage.WordPoints = state.WordPoints;
-            
+
             gamePage.ForceStateHasChanged();
         }
     }

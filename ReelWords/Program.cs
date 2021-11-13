@@ -1,12 +1,14 @@
 ﻿using ReelWords.Gameplay;
+using ReelWords.Gameplay.Readers;
 using ReelWords.Services;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace ReelWords
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             //bool playing = true;
 
@@ -22,13 +24,17 @@ namespace ReelWords
 
             //}
 
-            var slotMachine = ReadSlotMachine();
-            var game = new Game(slotMachine);
+            var slotMachine = await ReadSlotMachineAsync();
 
-            game.Run();
+            var inputManager = new InputManager();
+            var drawManager = new DrawManager();
+
+            var game = new Game(slotMachine, inputManager, drawManager);
+
+            await game.RunAsync();
         }
 
-        private static SlotMachine ReadSlotMachine()
+        private static async Task<SlotMachine> ReadSlotMachineAsync()
         {
             const string resourcesPath = "Resources";
             const string dictionaryPath = "american-english-large.txt";
@@ -39,13 +45,18 @@ namespace ReelWords
             var reelsReader = new ReelsReader();
             var scoresReader = new ScoresReader();
 
-            var dictionary = dictionaryReader.Read(Path.Combine(resourcesPath, dictionaryPath));
-            var reels = reelsReader.Read(Path.Combine(resourcesPath, reelsPath));
-            var scores = scoresReader.Read(Path.Combine(resourcesPath, scoresPath));
+            using (var dictionaryStream = File.OpenRead(Path.Combine(resourcesPath, dictionaryPath)))
+            using (var reelsStream = File.OpenRead(Path.Combine(resourcesPath, reelsPath)))
+            using (var scoresStream = File.OpenRead(Path.Combine(resourcesPath, scoresPath)))
+            {
+                var dictionary = await dictionaryReader.ReadAsync(dictionaryStream);
+                var reels = await reelsReader.ReadAsync(reelsStream);
+                var scores = await scoresReader.ReadAsync(scoresStream);
+                
+                var slotMachine = new SlotMachine(reels, scores, dictionary);
 
-            var slotMachine = new SlotMachine(reels, scores, dictionary);
-
-            return slotMachine;
+                return slotMachine;
+            }
         }
     }
 }

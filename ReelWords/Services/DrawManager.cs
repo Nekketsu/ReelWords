@@ -1,10 +1,11 @@
-﻿using ReelWords.Gameplay.State;
+﻿using ReelWords.Gameplay.Services;
+using ReelWords.Gameplay.State;
 using System;
 using System.Linq;
 
-namespace ReelWords.Gameplay
+namespace ReelWords.Services
 {
-    public class DrawManager
+    public class DrawManager : IDrawManager
     {
         public void Draw(GameState state)
         {
@@ -48,7 +49,7 @@ namespace ReelWords.Gameplay
         private void DrawTutorial(int length)
         {
             Console.SetCursorPosition(0, 0);
-            Console.WriteLine($"Press a letter index between '1' and '{length}' to select the letter in this position.");
+            Console.WriteLine($"Press a letter index between '{Gameplay.Input.FirstLetter}' and '{length}' to select the letter in this position.");
             Console.WriteLine("Press 'Backspace' to remove the last letter");
             Console.WriteLine("Press 'Enter' to confirm the word");
             Console.WriteLine("Press 'Escape' to exit the game");
@@ -68,7 +69,7 @@ namespace ReelWords.Gameplay
 
         private void DrawInput(int[] indices, char[] letters)
         {
-            var indicesText = string.Join(' ', indices);
+            var indicesText = string.Join(' ', indices.Select(index => index + 1));
             var input = string.Join(' ', letters);
 
             DrawText(0, 10, "INPUT");

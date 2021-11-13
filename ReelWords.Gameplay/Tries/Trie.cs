@@ -20,7 +20,7 @@ namespace ReelWords.Tries
         {
             var node = root;
 
-            foreach (var c in word.ToLower())
+            foreach (var c in word.ToUpper())
             {
                 if (!node.Children.TryGetValue(c, out var child))
                 {
@@ -39,7 +39,7 @@ namespace ReelWords.Tries
         {
             var node = root;
 
-            foreach (var c in word.ToLower())
+            foreach (var c in word.ToUpper())
             {
                 if (!node.Children.TryGetValue(c, out var child))
                 {
@@ -58,7 +58,7 @@ namespace ReelWords.Tries
 
         public void Delete(string word)
         {
-            var nodesToRemove = GetWordNodes(word.ToLower());
+            var nodesToRemove = GetWordNodes(word.ToUpper());
 
             if (nodesToRemove != null)
             {

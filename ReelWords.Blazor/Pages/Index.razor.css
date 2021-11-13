@@ -1,0 +1,44 @@
+﻿.slotMachine, .input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input {
+    margin-top: 10px;
+}
+
+.reel, .input div {
+    border: 2px solid blue;
+    border-top: 4px solid blue;
+    border-bottom: 4px solid blue;
+    position: relative;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+.reel:first-child, .input div:first-child {
+    border-left: 4px solid blue;
+}
+
+.reel:last-child, .input div:last-child {
+    border-right: 4px solid blue;
+}
+
+.slotMachine div div.points {
+    position: absolute;
+    right: 3px;
+    bottom: 3px;
+    width: 15px;
+    height: 15px;
+    vertical-align: text-bottom;
+    text-align: right;
+    font-size: small;
+}
+
+.slotMachine div.selected {
+    background-color: green;
+}

@@ -1,5 +1,6 @@
-﻿using ReelWords.Gameplay.State;
-using System;
+﻿using ReelWords.Gameplay.Services;
+using ReelWords.Gameplay.State;
+using System.Threading.Tasks;
 
 namespace ReelWords.Gameplay
 {
@@ -7,29 +8,33 @@ namespace ReelWords.Gameplay
     {
         private readonly SlotMachine slotMachine;
 
-        private readonly DrawManager drawManager;
-        private readonly InputManager input;
+        private readonly IDrawManager drawManager;
+        private readonly IInputManager inputManager;
+
+
+        private readonly Input input;
 
         private readonly GameState state;
 
-        public Game(SlotMachine slotMachine)
+        public Game(SlotMachine slotMachine, IInputManager inputManager, IDrawManager drawManager)
         {
             this.slotMachine = slotMachine;
+            this.inputManager = inputManager;
+            this.drawManager = drawManager;
 
-            drawManager = new DrawManager();
-            input = new InputManager(slotMachine.Length);
+            input = new Input(slotMachine.Length);
 
             state = new GameState();
         }
 
-        public void Run()
+        public async Task RunAsync()
         {
             Initialize();
             Draw();
 
             while (state.IsPlaying)
             {
-                Update();
+                await UpdateAsync();
                 Draw();
             }
         }
@@ -40,22 +45,19 @@ namespace ReelWords.Gameplay
 
             state.IsPlaying = true;
 
-            state.SlotMachineState.Points = slotMachine.Points;
-            state.SlotMachineState.Letters = slotMachine.Letters;
-
-            state.InputState.Indices = input.Indices;
-            state.InputState.Letters = slotMachine.GetLetters(state.InputState.Indices);
+            UpdateSlotMachineState();
+            UpdateInputState();
         }
 
-        private void Update()
+        private async Task UpdateAsync()
         {
-            var key = Console.ReadKey(true);
+            var key = await inputManager.ReadKeyAsync();
 
-            if (key.Key == ConsoleKey.Enter)
+            if (key == Input.Enter)
             {
                 ManageEnter();
             }
-            else if (key.Key == ConsoleKey.Escape)
+            else if (key == Input.Escape)
             {
                 ManageEscape();
             }
@@ -88,8 +90,8 @@ namespace ReelWords.Gameplay
             slotMachine.Next(indices);
             input.Clear();
 
+            UpdateSlotMachineState();
             UpdateInputState();
-
         }
 
         private void ManageEscape()
@@ -97,10 +99,16 @@ namespace ReelWords.Gameplay
             state.IsPlaying = false;
         }
 
-        private void ManageKeyPress(ConsoleKeyInfo key)
+        private void ManageKeyPress(char key)
         {
             input.Update(key);
             UpdateInputState();
+        }
+
+        private void UpdateSlotMachineState()
+        {
+            state.SlotMachineState.Points = slotMachine.Points;
+            state.SlotMachineState.Letters = slotMachine.Letters;
         }
 
         private void UpdateInputState()

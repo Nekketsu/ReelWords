@@ -1,8 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReelWords", "ReelWords\ReelWords.csproj", "{165097AE-EC70-4DA9-AD37-F27C71492EB0}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReelWords", "ReelWords\ReelWords.csproj", "{165097AE-EC70-4DA9-AD37-F27C71492EB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReelWordsTests", "ReelWordsTests\ReelWordsTests.csproj", "{56B14898-28F2-432E-BA5E-3F957D962D55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReelWordsTests", "ReelWordsTests\ReelWordsTests.csproj", "{56B14898-28F2-432E-BA5E-3F957D962D55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReelWords.Gameplay", "ReelWords.Gameplay\ReelWords.Gameplay.csproj", "{29EF6D15-FF5C-4BE4-9D9F-494479620396}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReelWords.Blazor", "ReelWords.Blazor\ReelWords.Blazor.csproj", "{513F8B23-D696-4714-B71F-90FE43126F3C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +25,19 @@ Global
 		{56B14898-28F2-432E-BA5E-3F957D962D55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56B14898-28F2-432E-BA5E-3F957D962D55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56B14898-28F2-432E-BA5E-3F957D962D55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29EF6D15-FF5C-4BE4-9D9F-494479620396}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29EF6D15-FF5C-4BE4-9D9F-494479620396}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29EF6D15-FF5C-4BE4-9D9F-494479620396}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29EF6D15-FF5C-4BE4-9D9F-494479620396}.Release|Any CPU.Build.0 = Release|Any CPU
+		{513F8B23-D696-4714-B71F-90FE43126F3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{513F8B23-D696-4714-B71F-90FE43126F3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{513F8B23-D696-4714-B71F-90FE43126F3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{513F8B23-D696-4714-B71F-90FE43126F3C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0090139B-56B1-4C19-9DE1-BAF12DE02285}
 	EndGlobalSection
 EndGlobal

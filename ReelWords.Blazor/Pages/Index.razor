@@ -1,0 +1,48 @@
+﻿@page "/"
+
+<PageTitle>ReelWords</PageTitle>
+
+<h1>ReelWords</h1>
+
+
+@if (game == null)
+{
+    <text>Loading...</text>
+}
+else
+{
+    <div>Score: @Score</div>
+
+    <div class="slotMachine">
+        @foreach (var reel in Reels)
+        {
+            <div @onclick="() => OnKeyPress(reel.Key)" class="reel @(reel.IsSelected ? "selected" : "")">
+                @reel.Letter
+                <div class="points">@reel.Points</div>
+            </div>
+        }
+    </div>
+
+    <div class="input">
+        @foreach (var letter in Input)
+        {
+            <div>@letter</div>
+        }
+    </div>
+
+    <button @onclick="RemoveLetter">Remove letter</button>
+    <button @onclick="SendWord">Send word</button>
+
+    @if (IsWordValid == true)
+    {
+        <div>
+            @Word is a valid word, +@WordPoints points!"
+        </div>
+    }
+    else if (IsWordValid == false)
+    {
+        <div>
+            @Word is an invalid word!
+        </div>
+    }
+}

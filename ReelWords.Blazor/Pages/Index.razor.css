@@ -1,31 +1,36 @@
-﻿.slotMachine, .input {
+﻿.game {
+    text-align: center;
+}
+
+.title {
+    color: #e8ca76;
+}
+
+.subtitle {
+    color: lightgray;
+}
+
+.slotMachine, .input {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .input {
-    margin-top: 10px;
+    height: 80px;
 }
 
 .reel, .input div {
-    border: 2px solid blue;
-    border-top: 4px solid blue;
-    border-bottom: 4px solid blue;
+    border: 4px solid #e6d29c;
+    border-radius: 10px;
     position: relative;
     width: 60px;
     height: 60px;
     text-align: center;
     font-size: xx-large;
     font-weight: bold;
-}
-
-.reel:first-child, .input div:first-child {
-    border-left: 4px solid blue;
-}
-
-.reel:last-child, .input div:last-child {
-    border-right: 4px solid blue;
+    background-color: #e8ca76;
+    margin: 1px;
 }
 
 .slotMachine div div.points {
@@ -40,5 +45,7 @@
 }
 
 .slotMachine div.selected {
-    background-color: green;
+    color:dimgray;
+    background-color: darkgray;
+    border: 4px solid lightgray;
 }

@@ -2,47 +2,48 @@
 
 <PageTitle>ReelWords</PageTitle>
 
-<h1>ReelWords</h1>
+<div class="game">
+    <h1 class="title">ReelWords</h1>
 
+    @if (game == null)
+    {
+        <h2 class="subtitle">Loading...</h2>
+    }
+    else
+    {
+        <h2 class="subtitle">Score: @Score</h2>
 
-@if (game == null)
-{
-    <text>Loading...</text>
-}
-else
-{
-    <div>Score: @Score</div>
+        <div class="slotMachine">
+            @foreach (var reel in Reels)
+            {
+                <div @onclick="() => OnKeyPress(reel.Key)" class="reel @(reel.IsSelected ? "selected" : "")">
+                    @reel.Letter
+                    <div class="points">@reel.Points</div>
+                </div>
+            }
+        </div>
 
-    <div class="slotMachine">
-        @foreach (var reel in Reels)
+        <div class="input mb-lg-3">
+            @foreach (var letter in Input)
+            {
+                <div>@letter</div>
+            }
+        </div>
+
+        <button class="btn btn-danger" @onclick="RemoveLetter">Remove letter</button>
+        <button class="btn btn-primary" @onclick="SendWord">Send word</button>
+
+        @if (IsWordValid == true)
         {
-            <div @onclick="() => OnKeyPress(reel.Key)" class="reel @(reel.IsSelected ? "selected" : "")">
-                @reel.Letter
-                <div class="points">@reel.Points</div>
+            <div>
+                @Word is a valid word, +@WordPoints points!"
             </div>
         }
-    </div>
-
-    <div class="input">
-        @foreach (var letter in Input)
+        else if (IsWordValid == false)
         {
-            <div>@letter</div>
+            <div>
+                @Word is an invalid word!
+            </div>
         }
-    </div>
-
-    <button @onclick="RemoveLetter">Remove letter</button>
-    <button @onclick="SendWord">Send word</button>
-
-    @if (IsWordValid == true)
-    {
-        <div>
-            @Word is a valid word, +@WordPoints points!"
-        </div>
     }
-    else if (IsWordValid == false)
-    {
-        <div>
-            @Word is an invalid word!
-        </div>
-    }
-}
+</div>

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ReelWords.Gameplay.State
+﻿namespace ReelWords.Gameplay.State
 {
     public class GameState
     {

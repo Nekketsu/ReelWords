@@ -1,6 +1,5 @@
 ﻿using ReelWords.Gameplay;
 using ReelWords.Tries;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -27,11 +26,31 @@ namespace ReelWordsTests
 
             scores = new Dictionary<char, int>
             {
-                ['a'] = 1, ['b'] = 3, ['c'] = 3, ['d'] = 2, ['e'] = 1,
-                ['f'] = 4, ['g'] = 2, ['h'] = 4, ['i'] = 1, ['j'] = 8,
-                ['k'] = 5, ['l'] = 1, ['m'] = 3, ['n'] = 1, ['o'] = 1,
-                ['p'] = 3, ['q'] = 1, ['r'] = 1, ['s'] = 1, ['t'] = 1,
-                ['u'] = 1, ['v'] = 4, ['w'] = 4, ['x'] = 8, ['y'] = 4,
+                ['a'] = 1,
+                ['b'] = 3,
+                ['c'] = 3,
+                ['d'] = 2,
+                ['e'] = 1,
+                ['f'] = 4,
+                ['g'] = 2,
+                ['h'] = 4,
+                ['i'] = 1,
+                ['j'] = 8,
+                ['k'] = 5,
+                ['l'] = 1,
+                ['m'] = 3,
+                ['n'] = 1,
+                ['o'] = 1,
+                ['p'] = 3,
+                ['q'] = 1,
+                ['r'] = 1,
+                ['s'] = 1,
+                ['t'] = 1,
+                ['u'] = 1,
+                ['v'] = 4,
+                ['w'] = 4,
+                ['x'] = 8,
+                ['y'] = 4,
                 ['z'] = 10
             };
 
@@ -78,10 +97,10 @@ namespace ReelWordsTests
         }
 
         [Theory]
-        [InlineData(new int[0], new [] { 'u', 'e', 'i', 'a', 'a', 'a' })]
-        [InlineData(new [] { 0 }, new[] { 'd', 'e', 'i', 'a', 'a', 'a' })]
+        [InlineData(new int[0], new[] { 'u', 'e', 'i', 'a', 'a', 'a' })]
+        [InlineData(new[] { 0 }, new[] { 'd', 'e', 'i', 'a', 'a', 'a' })]
         [InlineData(new[] { 2, 3, 5 }, new[] { 'u', 'e', 'l', 'n', 'a', 'b' })]
-        [InlineData(new [] { 0, 1, 2, 3, 4, 5 }, new [] { 'd', 'y', 'l', 'n', 'n', 'b' })]
+        [InlineData(new[] { 0, 1, 2, 3, 4, 5 }, new[] { 'd', 'y', 'l', 'n', 'n', 'b' })]
         public void Next_ShouldMoveNextIndices(int[] indices, char[] expectedLetters)
         {
             var slotMachine = GetSlotMachine();
@@ -125,7 +144,7 @@ namespace ReelWordsTests
         [InlineData("dog", true)]
         [InlineData("plane", false)]
         [InlineData("cat", true)]
-        public void IsValid_ShouldReturnWheterAWordIsValidOrNot(string word, bool expectedValue)
+        public void IsValid_ShouldReturnWhetherAWordIsValidOrNot(string word, bool expectedValue)
         {
             var slotMachine = GetSlotMachine();
 

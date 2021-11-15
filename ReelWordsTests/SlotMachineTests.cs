@@ -108,8 +108,8 @@ namespace ReelWordsTests
         [Theory]
         [InlineData(new int[0], new char[0])]
         [InlineData(new[] { 0 }, new[] { 'u' })]
-        [InlineData(new[] { 2, 3, 5 }, new[] { 'e', 'a', 'a', })]
-        [InlineData(new[] { 0, 1, 2, 3, 4, 5 }, new char[] { 'u', 'e', 'i', 'e', 'a', 'a' })]
+        [InlineData(new[] { 2, 3, 5 }, new[] { 'i', 'a', 'a', })]
+        [InlineData(new[] { 0, 1, 2, 3, 4, 5 }, new char[] { 'u', 'e', 'i', 'a', 'a', 'a' })]
         public void GetLetters_ShouldReturnLettersInSelectedIndices(int[] indices, char[] expectedLetters)
         {
             var slotMachine = GetSlotMachine();

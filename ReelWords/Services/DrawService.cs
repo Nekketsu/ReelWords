@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace ReelWords.Services
 {
-    public class DrawManager : IDrawManager
+    public class DrawService : IDrawService
     {
         public void Draw(GameState state)
         {
@@ -13,8 +13,8 @@ namespace ReelWords.Services
 
             if (state.IsPlaying)
             {
-                DrawTutorial(state.SlotMachineState.Letters.Length);
-                DrawSlotMachine(state.SlotMachineState.Letters, state.SlotMachineState.Points);
+                DrawTutorial(state.SlotMachine.Slots.Length);
+                DrawSlotMachine(state.SlotMachine);
 
                 if (state.IsWordValid == true)
                 {
@@ -24,9 +24,13 @@ namespace ReelWords.Services
                 {
                     DrawWordNotFound(state.Word);
                 }
+                else
+                {
+                    HideWordMessage();
+                }
 
                 DrawScore(state.Score);
-                DrawInput(state.InputState.Indices, state.InputState.Letters);
+                DrawInput(state.Input);
             }
             else
             {
@@ -55,53 +59,56 @@ namespace ReelWords.Services
             Console.WriteLine("Press 'Escape' to exit the game");
         }
 
-        private void DrawSlotMachine(char[] letters, int[] points)
+        private void DrawSlotMachine(SlotMachineState slotMachine)
         {
-            var indices = string.Join(' ', Enumerable.Range(1, letters.Length));
-            var slots = string.Join(' ', letters);
-            var pointsText = string.Join(' ', points);
-
             DrawText(0, 5, "SLOT MACHINE");
-            DrawText(0, 6, $"Indices:\t{indices}");
-            DrawText(0, 7, $"Slots:\t\t{slots}");
-            DrawText(0, 8, $"Points:\t\t{pointsText}");
+            DrawSlots(6, slotMachine.Slots);
         }
 
-        private void DrawInput(int[] indices, char[] letters)
+        private void DrawInput(InputState input)
         {
-            var indicesText = string.Join(' ', indices.Select(index => index + 1));
-            var input = string.Join(' ', letters);
-
             DrawText(0, 10, "INPUT");
-            DrawText(0, 11, $"Indices:\t{indicesText}");
-            DrawText(0, 12, $"Input:\t\t{input}");
+            DrawSlots(11, input.Slots);
         }
 
         private void DrawWordFound(string word, int points)
         {
-            ClearLine(14);
-
-            Console.Write($"\"{word}\" is a valid word, ");
+            ClearLine(15);
 
             var foregroundColor = Console.ForegroundColor;
+
             Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(word);
+            Console.ForegroundColor = foregroundColor;
+
+            Console.Write(" is a valid word, ");
+
+            Console.ForegroundColor = ConsoleColor.White;
             Console.Write($"+{points} points!");
             Console.ForegroundColor = foregroundColor;
         }
 
         private void DrawWordNotFound(string word)
         {
-            ClearLine(14);
+            ClearLine(15);
 
             var foregroundColor = Console.ForegroundColor;
+
             Console.ForegroundColor = ConsoleColor.Red;
-            DrawText(0, 14, $"\"{word}\" is an invalid word!");
+            Console.Write(word);
             Console.ForegroundColor = foregroundColor;
+
+            Console.WriteLine(" is an invalid word!");
+        }
+
+        private void HideWordMessage()
+        {
+            ClearLine(15);
         }
 
         private void DrawScore(int score)
         {
-            DrawText(0, 16, $"SCORE:\t {score}");
+            DrawText(0, 17, $"SCORE:\t {score}");
         }
 
         private void DrawThankYou(int score)
@@ -117,6 +124,17 @@ namespace ReelWords.Services
 
             Console.SetCursorPosition(left, top);
             Console.Write(text);
+        }
+
+        private void DrawSlots(int top, SlotState[] slots)
+        {
+            var keys = string.Join(' ', slots.Select(slot => slot.Key));
+            var letters = string.Join(' ', slots.Select(slot => slot.Letter));
+            var points = string.Join(' ', slots.Select(slots => slots.Points));
+
+            DrawText(0, top, $"Indices:\t{keys}");
+            DrawText(0, top + 1, $"Letters:\t{letters}");
+            DrawText(0, top + 2, $"Points:\t\t{points}");
         }
 
         private void ClearLine(int line)

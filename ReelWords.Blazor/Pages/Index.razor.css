@@ -10,7 +10,7 @@
     color: lightgray;
 }
 
-.slotMachine, .input {
+.reel-collection {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -20,20 +20,21 @@
     height: 80px;
 }
 
-.reel, .input div {
-    border: 4px solid #e6d29c;
-    border-radius: 10px;
+.reel {
     position: relative;
     width: 60px;
     height: 60px;
+    margin: 1px;
     text-align: center;
     font-size: xx-large;
     font-weight: bold;
+    border: 4px solid #e6d29c;
+    border-radius: 10px;
     background-color: #e8ca76;
-    margin: 1px;
+    user-select: none;
 }
 
-.slotMachine div div.points {
+.points {
     position: absolute;
     right: 3px;
     bottom: 3px;
@@ -44,8 +45,8 @@
     font-size: small;
 }
 
-.slotMachine div.selected {
-    color:dimgray;
+.reel.selected {
+    color: dimgray;
     background-color: darkgray;
     border: 4px solid lightgray;
 }

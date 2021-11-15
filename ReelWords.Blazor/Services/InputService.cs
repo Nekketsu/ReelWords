@@ -2,12 +2,12 @@
 
 namespace ReelWords.Blazor.Services
 {
-    public class InputManager : IInputManager
+    public class InputService : IInputService
     {
         private Pages.Index gamePage;
-        private TaskCompletionSource<char> taskCompletionSource;
+        private TaskCompletionSource<char>? taskCompletionSource;
 
-        public InputManager(Pages.Index gamePage)
+        public InputService(Pages.Index gamePage)
         {
             this.gamePage = gamePage;
 

@@ -2,7 +2,7 @@
 
 namespace ReelWords.Gameplay.Services
 {
-    public interface IDrawManager
+    public interface IDrawService
     {
         void Draw(GameState state);
     }

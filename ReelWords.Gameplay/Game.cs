@@ -1,5 +1,6 @@
 ﻿using ReelWords.Gameplay.Services;
 using ReelWords.Gameplay.State;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ReelWords.Gameplay
@@ -8,19 +9,18 @@ namespace ReelWords.Gameplay
     {
         private readonly SlotMachine slotMachine;
 
-        private readonly IDrawManager drawManager;
-        private readonly IInputManager inputManager;
-
+        private readonly IDrawService drawService;
+        private readonly IInputService inputService;
 
         private readonly Input input;
 
         private readonly GameState state;
 
-        public Game(SlotMachine slotMachine, IInputManager inputManager, IDrawManager drawManager)
+        public Game(SlotMachine slotMachine, IInputService inputService, IDrawService drawService)
         {
             this.slotMachine = slotMachine;
-            this.inputManager = inputManager;
-            this.drawManager = drawManager;
+            this.inputService = inputService;
+            this.drawService = drawService;
 
             input = new Input(slotMachine.Length);
 
@@ -51,7 +51,7 @@ namespace ReelWords.Gameplay
 
         private async Task UpdateAsync()
         {
-            var key = await inputManager.ReadKeyAsync();
+            var key = await inputService.ReadKeyAsync();
 
             if (key == Input.Enter)
             {
@@ -69,7 +69,7 @@ namespace ReelWords.Gameplay
 
         private void Draw()
         {
-            drawManager.Draw(state);
+            drawService.Draw(state);
         }
 
         private void ManageEnter()
@@ -102,19 +102,35 @@ namespace ReelWords.Gameplay
         private void ManageKeyPress(char key)
         {
             input.Update(key);
+
+            state.IsWordValid = null;
             UpdateInputState();
         }
 
         private void UpdateSlotMachineState()
         {
-            state.SlotMachineState.Points = slotMachine.Points;
-            state.SlotMachineState.Letters = slotMachine.Letters;
+            state.SlotMachine.Slots = slotMachine.Letters
+                .Zip(slotMachine.Points)
+                .Select((items, index) => new SlotState
+                {
+                    Letter = items.First,
+                    Key = (char)(Input.FirstLetter + index),
+                    Points = items.Second
+                }).ToArray();
         }
 
         private void UpdateInputState()
         {
-            state.InputState.Indices = input.Indices;
-            state.InputState.Letters = slotMachine.GetLetters(state.InputState.Indices);
+            var points = slotMachine.Points;
+            var letters = slotMachine.Letters;
+
+            state.Input.Slots = input.Indices
+                .Select(index => new SlotState
+                {
+                    Letter = letters[index],
+                    Key = (char)(Input.FirstLetter + index),
+                    Points = points[index]
+                }).ToArray();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace ReelWords.Gameplay.State
+﻿using System;
+
+namespace ReelWords.Gameplay.State
 {
     public class GameState
     {
@@ -9,7 +11,7 @@
         public bool? IsWordValid { get; set; }
         public int WordPoints { get; set; }
 
-        public SlotMachineState SlotMachineState { get; set; } = new SlotMachineState();
-        public InputState InputState { get; set; } = new InputState();
+        public SlotMachineState SlotMachine = new SlotMachineState();
+        public InputState Input { get; set; } = new InputState();
     }
 }

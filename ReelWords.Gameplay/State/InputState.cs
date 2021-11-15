@@ -1,8 +1,9 @@
-﻿namespace ReelWords.Gameplay.State
+﻿using System;
+
+namespace ReelWords.Gameplay.State
 {
     public class InputState
     {
-        public int[] Indices { get; set; }
-        public char[] Letters { get; set; }
+        public SlotState[] Slots { get; set; } = Array.Empty<SlotState>();
     }
 }

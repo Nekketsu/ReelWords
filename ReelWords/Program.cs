@@ -26,10 +26,10 @@ namespace ReelWords
 
             var slotMachine = await ReadSlotMachineAsync();
 
-            var inputManager = new InputManager();
-            var drawManager = new DrawManager();
+            var inputService = new InputService();
+            var drawService = new DrawService();
 
-            var game = new Game(slotMachine, inputManager, drawManager);
+            var game = new Game(slotMachine, inputService, drawService);
 
             await game.RunAsync();
         }

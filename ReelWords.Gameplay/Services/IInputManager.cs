@@ -2,7 +2,7 @@
 
 namespace ReelWords.Gameplay.Services
 {
-    public interface IInputManager
+    public interface IInputService
     {
         Task<char> ReadKeyAsync();
     }

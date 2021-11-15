@@ -2,6 +2,7 @@
 using ReelWords.Blazor.Services;
 using ReelWords.Gameplay;
 using ReelWords.Gameplay.Readers;
+using ReelWords.Gameplay.State;
 
 namespace ReelWords.Blazor.Pages
 {
@@ -13,21 +14,16 @@ namespace ReelWords.Blazor.Pages
 
         public event EventHandler<char> KeyPressed;
 
-        public Models.Reel[] Reels { get; set; }
-        public char[] Input { get; set; }
-        public int Score { get; set; }
-        public string Word { get; set; }
-        public bool? IsWordValid { get; set; }
-        public int WordPoints { get; set; }
+        public GameState GameState { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             var slotMachine = await ReadSlotMachineAsync();
 
-            var inputManager = new InputManager(this);
-            var drawManager = new DrawManager(this);
+            var inputService = new InputService(this);
+            var drawService = new DrawService(this);
 
-            game = new Game(slotMachine, inputManager, drawManager);
+            game = new Game(slotMachine, inputService, drawService);
 
             await game.RunAsync();
         }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ReelWords.Services
 {
-    public class InputManager : IInputManager
+    public class InputService : IInputService
     {
         public Task<char> ReadKeyAsync()
         {

@@ -5,44 +5,48 @@
 <div class="game">
     <h1 class="title">ReelWords</h1>
 
-    @if (game == null)
+    @if (GameState == null)
     {
         <h2 class="subtitle">Loading...</h2>
     }
     else
     {
-        <h2 class="subtitle">Score: @Score</h2>
+        <h2 class="subtitle">Score: @GameState.Score</h2>
 
-        <div class="slotMachine">
-            @foreach (var reel in Reels)
+        <div class="reel-collection">
+            @foreach (var slot in GameState.SlotMachine.Slots)
             {
-                <div @onclick="() => OnKeyPress(reel.Key)" class="reel @(reel.IsSelected ? "selected" : "")">
-                    @reel.Letter
-                    <div class="points">@reel.Points</div>
+                <div class="reel @(GameState.Input.Slots.Any(s => s.Key == slot.Key) ? "selected" : "")"
+                           @onclick="() => OnKeyPress(slot.Key)">
+                    @slot.Letter
+                    <div class="points">@slot.Points</div>
                 </div>
             }
         </div>
 
-        <div class="input mb-lg-3">
-            @foreach (var letter in Input)
+        <div class="reel-collection input mb-lg-3">
+            @foreach (var slot in GameState.Input.Slots)
             {
-                <div>@letter</div>
+                <div class="reel">
+                    @slot.Letter
+                    <div class="points">@slot.Points</div>
+                </div>
             }
         </div>
 
         <button class="btn btn-danger" @onclick="RemoveLetter">Remove letter</button>
         <button class="btn btn-primary" @onclick="SendWord">Send word</button>
 
-        @if (IsWordValid == true)
+        @if (GameState.IsWordValid == true)
         {
-            <div>
-                @Word is a valid word, +@WordPoints points!"
+            <div class="subtitle">
+                @GameState.Word is a valid word, +@GameState.WordPoints points!"
             </div>
         }
-        else if (IsWordValid == false)
+        else if (GameState.IsWordValid == false)
         {
-            <div>
-                @Word is an invalid word!
+            <div class="subtitle">
+                @GameState.Word is an invalid word!
             </div>
         }
     }

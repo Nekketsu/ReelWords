@@ -24,5 +24,13 @@ namespace ReelWordsTests
             trie.Delete(AWESOME_CO);
             Assert.False(trie.Search(AWESOME_CO));
         }
+
+        [Fact]
+        public void Search_ShouldBeCaseInsensitive()
+        {
+            var trie = new Trie();
+            trie.Insert(AWESOME_CO.ToLower());
+            Assert.True(trie.Search(AWESOME_CO.ToUpper()));
+        }
     }
 }

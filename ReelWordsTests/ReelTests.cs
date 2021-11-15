@@ -36,7 +36,7 @@ namespace ReelWordsTests
         }
 
         [Theory, MemberData(nameof(letters))]
-        public void Next_ShouldRestart_WhenVisitedAllLetters(char[] letters)
+        public void Next_ShouldTurnAround_WhenVisitedAllLetters(char[] letters)
         {
             var reel = new Reel(letters);
 

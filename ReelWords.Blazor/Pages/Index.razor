@@ -16,7 +16,7 @@
         <div class="reel-collection">
             @foreach (var slot in GameState.SlotMachine.Slots)
             {
-                <div class="reel @(GameState.Input.Slots.Any(s => s.Key == slot.Key) ? "selected" : "")"
+                <div class="reel selectable @(GameState.Input.Slots.Any(s => s.Key == slot.Key) ? "selected" : "")"
                            @onclick="() => OnKeyPress(slot.Key)">
                     @slot.Letter
                     <div class="points">@slot.Points</div>

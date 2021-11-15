@@ -34,6 +34,16 @@
     user-select: none;
 }
 
+.reel.selectable {
+    cursor: pointer;
+}
+
+.reel.selected {
+    color: dimgray;
+    background-color: darkgray;
+    border: 4px solid lightgray;
+}
+
 .points {
     position: absolute;
     right: 3px;
@@ -43,12 +53,6 @@
     vertical-align: text-bottom;
     text-align: right;
     font-size: small;
-}
-
-.reel.selected {
-    color: dimgray;
-    background-color: darkgray;
-    border: 4px solid lightgray;
 }
 
 .word-valid {

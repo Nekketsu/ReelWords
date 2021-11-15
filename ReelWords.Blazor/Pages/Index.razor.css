@@ -50,3 +50,18 @@
     background-color: darkgray;
     border: 4px solid lightgray;
 }
+
+.word-valid {
+    color: green;
+    font-weight: bold;
+}
+
+.word-invalid {
+    color: red;
+    font-weight: bold;
+}
+
+.word-points {
+    color: white;
+    font-weight: bold;
+}

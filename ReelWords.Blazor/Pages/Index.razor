@@ -39,14 +39,14 @@
 
         @if (GameState.IsWordValid == true)
         {
-            <div class="subtitle">
-                @GameState.Word is a valid word, +@GameState.WordPoints points!"
+            <div class="subtitle mt-lg-3">
+                <span class="word-valid">@GameState.Word</span> is a valid word, <span class="word-points">+@GameState.WordPoints points!</span>
             </div>
         }
         else if (GameState.IsWordValid == false)
         {
-            <div class="subtitle">
-                @GameState.Word is an invalid word!
+            <div class="subtitle mt-lg-3">
+                <span class="word-invalid">@GameState.Word</span> is an invalid word!
             </div>
         }
     }

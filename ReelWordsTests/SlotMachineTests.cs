@@ -1,6 +1,4 @@
-﻿using ReelWords.Gameplay;
-using ReelWords.Tries;
-using System.Collections.Generic;
+﻿using ReelWordsTests.Factories;
 using System.Linq;
 using Xunit;
 
@@ -8,80 +6,22 @@ namespace ReelWordsTests
 {
     public class SlotMachineTests
     {
-        private char[][] letters;
-        private Dictionary<char, int> scores;
-        private Trie trie;
-
-        public SlotMachineTests()
-        {
-            letters = new[]
-            {
-                new[] { 'u', 'd', 'x', 'c', 'l', 'a', 'e' },
-                new[] { 'e', 'y', 'v', 'p', 'q', 'y', 'n' },
-                new[] { 'i', 'l', 'o', 'w', 'm', 'g', 'n' },
-                new[] { 'a', 'n', 'd', 'i', 's', 'e', 'v' },
-                new[] { 'a', 'n', 'j', 'a', 'e', 't', 'b' },
-                new[] { 'a', 'b', 'w', 't', 'd', 'o', 'h' }
-            };
-
-            scores = new Dictionary<char, int>
-            {
-                ['a'] = 1,
-                ['b'] = 3,
-                ['c'] = 3,
-                ['d'] = 2,
-                ['e'] = 1,
-                ['f'] = 4,
-                ['g'] = 2,
-                ['h'] = 4,
-                ['i'] = 1,
-                ['j'] = 8,
-                ['k'] = 5,
-                ['l'] = 1,
-                ['m'] = 3,
-                ['n'] = 1,
-                ['o'] = 1,
-                ['p'] = 3,
-                ['q'] = 1,
-                ['r'] = 1,
-                ['s'] = 1,
-                ['t'] = 1,
-                ['u'] = 1,
-                ['v'] = 4,
-                ['w'] = 4,
-                ['x'] = 8,
-                ['y'] = 4,
-                ['z'] = 10
-            };
-
-            trie = new Trie();
-            trie.Insert("river");
-            trie.Insert("dog");
-            trie.Insert("cat");
-        }
-
-        private SlotMachine GetSlotMachine()
-        {
-            var reels = letters.Select(reelLetters => new Reel(reelLetters)).ToArray();
-            var slotMachine = new SlotMachine(reels, scores, trie);
-
-            return slotMachine;
-        }
+        SlotMachineFactory slotMachineFactory = new SlotMachineFactory();
 
         [Fact]
         public void Length_ShouldReturnNumberOfReels()
         {
-            var slotMachine = GetSlotMachine();
+            var slotMachine = slotMachineFactory.GetSlotMachine();
 
-            Assert.Equal(letters.Length, slotMachine.Length);
+            Assert.Equal(slotMachineFactory.Letters.Length, slotMachine.Length);
         }
 
         [Fact]
-        public void Letters_ShouldReturnSelectedLetters()
+        public void Letters_ShouldReturnCurrentSelectedLetters()
         {
-            var slotMachine = GetSlotMachine();
+            var slotMachine = slotMachineFactory.GetSlotMachine();
 
-            var letters = this.letters.Select(letter => letter[0]).ToArray();
+            var letters = slotMachineFactory.Letters.Select(letter => letter[0]).ToArray();
 
             Assert.All(letters.Zip(slotMachine.Letters), item => Assert.Equal(item.First, item.Second));
         }
@@ -89,9 +29,9 @@ namespace ReelWordsTests
         [Fact]
         public void Points_ShouldHaveExpectedValues()
         {
-            var slotMachine = GetSlotMachine();
+            var slotMachine = slotMachineFactory.GetSlotMachine();
 
-            var points = letters.Select(letter => scores[letter[0]]).ToArray();
+            var points = slotMachineFactory.Letters.Select(letter => slotMachineFactory.Scores[letter[0]]).ToArray();
 
             Assert.All(points.Zip(slotMachine.Points), item => Assert.Equal(item.First, item.Second));
         }
@@ -103,7 +43,7 @@ namespace ReelWordsTests
         [InlineData(new[] { 0, 1, 2, 3, 4, 5 }, new[] { 'd', 'y', 'l', 'n', 'n', 'b' })]
         public void Next_ShouldMoveNextIndices(int[] indices, char[] expectedLetters)
         {
-            var slotMachine = GetSlotMachine();
+            var slotMachine = slotMachineFactory.GetSlotMachine();
 
             slotMachine.Next(indices);
 
@@ -117,7 +57,7 @@ namespace ReelWordsTests
         [InlineData(new[] { 0, 1, 2, 3, 4, 5 }, 6)]
         public void GetScore_ShouldCalculteScoreOfSelectedIndices(int[] indices, int expectedScore)
         {
-            var slotMachine = GetSlotMachine();
+            var slotMachine = slotMachineFactory.GetSlotMachine();
 
             var score = slotMachine.GetScore(indices);
 
@@ -131,7 +71,7 @@ namespace ReelWordsTests
         [InlineData(new[] { 0, 1, 2, 3, 4, 5 }, new char[] { 'u', 'e', 'i', 'a', 'a', 'a' })]
         public void GetLetters_ShouldReturnLettersInSelectedIndices(int[] indices, char[] expectedLetters)
         {
-            var slotMachine = GetSlotMachine();
+            var slotMachine = slotMachineFactory.GetSlotMachine();
 
             var letters = slotMachine.GetLetters(indices);
 
@@ -146,7 +86,7 @@ namespace ReelWordsTests
         [InlineData("cat", true)]
         public void IsValid_ShouldReturnWhetherAWordIsValidOrNot(string word, bool expectedValue)
         {
-            var slotMachine = GetSlotMachine();
+            var slotMachine = slotMachineFactory.GetSlotMachine();
 
             var isValid = slotMachine.IsValid(word);
 

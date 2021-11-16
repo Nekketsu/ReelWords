@@ -13,7 +13,7 @@ namespace ReelWords.Services
 
             if (key.Key == ConsoleKey.Escape)
             {
-                return Task.FromResult(Input.Backspace);
+                return Task.FromResult(Input.Escape);
             }
             else if (key.Key == ConsoleKey.Enter)
             {

@@ -14,7 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ReelWords\ReelWords.csproj" />
+      <ProjectReference Include="..\ReelWords.Gameplay\ReelWords.Gameplay.csproj" />
     </ItemGroup>
 
 </Project>

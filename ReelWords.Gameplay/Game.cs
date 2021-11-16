@@ -25,13 +25,13 @@ namespace ReelWords.Gameplay
             input = new Input(slotMachine.Length);
 
             state = new GameState();
+
+            Initialize();
+            Draw();
         }
 
         public async Task RunAsync()
         {
-            Initialize();
-            Draw();
-
             while (state.IsPlaying)
             {
                 await UpdateAsync();
